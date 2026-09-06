@@ -1,6 +1,5 @@
 /* ==========================================================================
    EVENT MANAGER - HUMAN-CRAFTED DESIGN SYSTEM
-   Inspired by EventBookings (https://www.eventbookings.com/)
    Clean, Professional, High-Contrast Event Ticketing & Booking Interface
    ========================================================================== */
 
@@ -79,7 +78,7 @@ a:hover {
 }
 
 /* ==========================================================================
-   Navigation Bar (EventBookings Clean Modern Header)
+   Navigation Bar (Clean Modern Header)
    ========================================================================== */
 .site-navbar {
     background: #ffffff !important;
@@ -244,7 +243,7 @@ a:hover {
     padding: 1.75rem;
 }
 
-/* Event List Card (EventBookings Style) */
+/* Event List Card */
 .event-card {
     background: #ffffff;
     border: 1px solid var(--border-color);

@@ -5,7 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-A modern, full-featured Django web application designed for comprehensive event management, slot reservations, and dynamic catering customization. Inspired by modern ticketing platforms like [EventBookings](https://www.eventbookings.com/), **Event Manager** provides a seamless booking experience for clients while streamlining event scheduling, menu personalization, and cost calculation.
+A modern, full-featured Django web application designed for comprehensive event management, slot reservations, and dynamic catering customization. **Event Manager** provides a seamless, professional booking experience for clients while streamlining event scheduling, venue showcase, interactive menu personalization, and automated cost calculation.
 
 ---
 
@@ -43,7 +43,7 @@ A modern, full-featured Django web application designed for comprehensive event 
 * **Automated Email Receipts**: Branded booking confirmation emails dispatched via SMTP with full booking details.
 
 ### 5. Clean, Human-Made UI/UX
-* **EventBookings Aesthetic**: Crisp white cards, high-contrast typography, and intuitive form controls.
+* **Modern & Clean Aesthetic**: Crisp white cards, high-contrast typography, and intuitive form controls.
 * **Full-Bleed Media Sections**: Rich hero banners with background photography and dark gradient overlays.
 * **Mobile-Responsive**: Fully responsive navigation with mobile collapsible menu and adaptive grid layouts.
 
@@ -88,11 +88,11 @@ Django.event_manager/
 │   └── wsgi.py             # WSGI application entry
 │
 ├── static/                 # Static assets
-│   ├── CSS/style.css       # Clean EventBookings-inspired design system
+│   ├── CSS/style.css       # Modern, responsive design system & theme tokens
 │   └── images/             # Backgrounds, badges, and default placeholders
 │
 ├── templates/              # HTML templates
-│   ├── base.html           # Master layout with EventBookings navbar & footer
+│   ├── base.html           # Master layout with responsive navbar & modern footer
 │   ├── home.html           # Hero section & event package catalog
 │   ├── login.html          # Authentication login card
 │   ├── registration.html   # Multi-column registration card with reCAPTCHA
