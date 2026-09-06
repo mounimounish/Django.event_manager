@@ -1,29 +1,81 @@
 {% extends 'base.html' %}
-{% block content %}
 
-<div class="container mt-5">
-    <div class="bg-light p-4 rounded shadow">
-        <h2 class="text-center mb-4">Total Cost Breakdown</h2>
-        <p><strong>Basic Package Price:</strong> ₹{{ basic_package_price }}</p>
-        <p><strong>Per Plate Price:</strong> ₹{{ menu_price }}</p>
-        <p><strong>Total People:</strong> {{ details.total_people }}</p>
-        <p><strong>Total Menu Price:</strong> ₹{{ total_menu_price }}</p>
-        <p><strong>Cake Charges:</strong> ₹{{ cake_price }}</p>
-        <p><strong>Supplier Charges:</strong> ₹{{ supplier_price }}</p>
-        <p><strong>Maintenance Charges:</strong> ₹{{ maintenance_charge }}</p>
-        <p><strong>Cleaning Charges:</strong> ₹{{ cleaning_charge }}</p>
-        <p><strong>GST (6%):</strong> ₹{{ gst }}</p>
-        <hr>
-        <h4 class="text-success">Grand Total: ₹{{ total_cost }}</h4>
+{% block title %}Event Manager • Total Cost Breakdown{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex p-3 rounded-circle bg-success bg-opacity-10 text-success mb-2">
+                            <i class="bi bi-receipt fs-2"></i>
+                        </div>
+                        <h2 class="h4 fw-bold text-dark mb-1">Total Cost Breakdown</h2>
+                        <p class="text-muted small">Detailed itemized cost calculation for your event</p>
+                    </div>
+
+                    <div class="receipt-box mb-4">
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-building me-2"></i>Basic Package Price</span>
+                            <strong class="text-dark">₹{{ basic_package_price }}</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-tag me-2"></i>Per Plate Price</span>
+                            <strong class="text-dark">₹{{ menu_price }}</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-people me-2"></i>Total People</span>
+                            <strong class="text-dark">{{ details.total_people }}</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-egg-fried me-2"></i>Total Menu Price</span>
+                            <strong class="text-dark">₹{{ total_menu_price }}</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-cake2 me-2"></i>Cake Charges</span>
+                            <strong class="text-dark">₹{{ cake_price }}</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-person-workspace me-2"></i>Supplier Charges</span>
+                            <strong class="text-dark">₹{{ supplier_price }}</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-tools me-2"></i>Maintenance Charges</span>
+                            <strong class="text-dark">₹{{ maintenance_charge }}</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-check2-circle me-2"></i>Cleaning Charges</span>
+                            <strong class="text-dark">₹{{ cleaning_charge }}</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="text-muted"><i class="bi bi-percent me-2"></i>GST (6%)</span>
+                            <strong class="text-dark">₹{{ gst }}</strong>
+                        </div>
+
+                        <!-- Grand Total -->
+                        <div class="grand-total-banner">
+                            <div>
+                                <small class="text-uppercase fw-bold text-success d-block">Grand Total</small>
+                                <span class="h3 fw-bold text-success mb-0">₹{{ total_cost }}</span>
+                            </div>
+                            <span class="badge bg-success px-3 py-2">All Inclusive</span>
+                        </div>
+                    </div>
+
+                    <form action="{% url 'finalize_order' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="detail_id" value="{{ details.id }}">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-circle-fill me-1"></i> Confirm Booking
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<br>
-<div class="text-center">
-    <form action="{% url 'finalize_order' %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="detail_id" value="{{ details.id }}">
-        <input type="submit" class="btn btn-primary" value="Confirm">
-    </form>
-</div>
-<br>
 {% endblock %}

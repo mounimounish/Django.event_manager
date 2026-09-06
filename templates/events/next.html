@@ -1,53 +1,113 @@
 {% extends 'base.html' %}
+
+{% block title %}Event Manager • Catering & Menus{% endblock %}
+
 {% block content %}
-
-<div class="text-center">
-    <h2>Would you like to book catering?</h2>
-    <button class="btn btn-success" onclick="showMenu()">Yes</button>
-    <button class="btn btn-danger" onclick="hideMenu()">No</button>
-</div>
-<br>
-
-<div class="row mt-5 d-none" id="menuWrapper">
-    <div class="col-md-6" id="vegMenuSection">
-        <h4 class="text-center">Veg Menu</h4>
-        {% for item in veg_menu %}
-        <div class="card shadow mb-3 p-3">
-            <h6>₹{{ item.price }}</h6>
-            <h6>(per head)</h6>
-            <br>
-            {{ item.item }}
-            <form action="{% url 'customize' %}" method="get">
-                <input type="hidden" name="menu" value="{{ forloop.counter }}">
-                <input type="hidden" name="type" value="veg">
-                <input type="submit" class="btn btn-primary" value="Customize">
-            </form>
+<div class="container py-4">
+    <!-- Catering Choice Card -->
+    <div class="card shadow-sm border-0 mb-4 text-center p-4 p-md-5">
+        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2 d-inline-block mx-auto mb-3">
+            Step 2 of 4: Catering
+        </span>
+        <h2 class="h3 fw-bold text-dark mb-2">Would you like to book catering for your event?</h2>
+        <p class="text-muted mb-4">Choose from our curated vegetarian and non-vegetarian menus, or proceed directly.</p>
+        
+        <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-success btn-lg px-4" onclick="showMenu()">
+                <i class="bi bi-check-circle me-1"></i> Yes, View Menus
+            </button>
+            <button class="btn btn-outline-secondary btn-lg px-4" onclick="hideMenu()">
+                <i class="bi bi-x-circle me-1"></i> No, Skip Catering
+            </button>
         </div>
-        {% endfor %}
     </div>
 
-    <div class="col-md-6" id="nonVegMenuSection">
-        <h4 class="text-center">Non-Veg Menu</h4>
-        {% for item in non_veg_menu %}
-        <div class="card shadow mb-3 p-3">
-            <h6>₹{{ item.price }}</h6>
-            <h6>(per head)</h6>
-            <br>
-            {{ item.item }}
-            <form action="{% url 'customize' %}" method="get">
-                <input type="hidden" name="menu" value="{{ forloop.counter }}">
-                <input type="hidden" name="type" value="nonveg">
-                <input type="submit" class="btn btn-primary" value="Customize">
-            </form>
-        </div>
-        {% endfor %}
-    </div>
-</div>
+    <!-- Menus (Toggled via JS) -->
+    <div class="row g-4 d-none" id="menuWrapper">
+        <!-- Veg Menu -->
+        <div class="col-lg-6" id="vegMenuSection">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-circle-fill text-success fs-5"></i>
+                <h3 class="h4 fw-bold mb-0 text-success">Vegetarian Menus</h3>
+            </div>
 
-<div class="text-center">
-    <form action="{% url 'final_details' %}" method="get">
-        <input type="submit" class="btn btn-primary" value="Next">
-    </form>
+            {% for item in veg_menu %}
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">
+                            Veg Menu {{ forloop.counter }}
+                        </span>
+                        <div class="text-end">
+                            <span class="fs-5 fw-bold text-success">₹{{ item.price }}</span>
+                            <small class="text-muted d-block">(per head)</small>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-light rounded border my-3">
+                        <small class="text-muted text-uppercase fw-bold d-block mb-1">Menu Items</small>
+                        <p class="mb-0 text-dark">{{ item.item }}</p>
+                    </div>
+
+                    <form action="{% url 'customize' %}" method="get">
+                        <input type="hidden" name="menu" value="{{ forloop.counter }}">
+                        <input type="hidden" name="type" value="veg">
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-sliders me-1"></i> Customize Menu
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Non-Veg Menu -->
+        <div class="col-lg-6" id="nonVegMenuSection">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-circle-fill text-danger fs-5"></i>
+                <h3 class="h4 fw-bold mb-0 text-danger">Non-Vegetarian Menus</h3>
+            </div>
+
+            {% for item in non_veg_menu %}
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25">
+                            Non-Veg Menu {{ forloop.counter }}
+                        </span>
+                        <div class="text-end">
+                            <span class="fs-5 fw-bold text-danger">₹{{ item.price }}</span>
+                            <small class="text-muted d-block">(per head)</small>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-light rounded border my-3">
+                        <small class="text-muted text-uppercase fw-bold d-block mb-1">Menu Items</small>
+                        <p class="mb-0 text-dark">{{ item.item }}</p>
+                    </div>
+
+                    <form action="{% url 'customize' %}" method="get">
+                        <input type="hidden" name="menu" value="{{ forloop.counter }}">
+                        <input type="hidden" name="type" value="nonveg">
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-sliders me-1"></i> Customize Menu
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Continue Button -->
+    <div class="text-center mt-4 pt-2">
+        <form action="{% url 'final_details' %}" method="get">
+            <button type="submit" class="btn btn-primary btn-lg px-5">
+                <span>Next: Event Details</span>
+                <i class="bi bi-arrow-right ms-1"></i>
+            </button>
+        </form>
+    </div>
 </div>
 
 <script>
@@ -59,5 +119,4 @@
         document.getElementById("menuWrapper").classList.add("d-none");
     }
 </script>
-
 {% endblock %}

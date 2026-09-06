@@ -1,26 +1,59 @@
 {% extends 'base.html' %}
 
+{% block title %}Event Manager • Login{% endblock %}
+
 {% block content %}
-<br>
-<div class="container">
-    <div class="jumbotron">
-        <div class="card card-body">
-            <form action="{% url 'login' %}" method="POST">
-                {% csrf_token %}
-                <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping">Username</span>
-                    <input type="text" class="form-control" placeholder="username" aria-label="username" name="username"
-                        aria-describedby="addon-wrapping">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex p-3 rounded-circle bg-light text-primary mb-3">
+                            <i class="bi bi-person-circle fs-1"></i>
+                        </div>
+                        <h1 class="h3 fw-bold mb-1">Login to Your Account</h1>
+                        <p class="text-muted small">Enter your credentials to manage your bookings</p>
+                    </div>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required autofocus>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="text-muted small mb-0">
+                            Don't have an account? 
+                            <a href="{% url 'register' %}" class="fw-bold">
+                                Create an account
+                            </a>
+                        </p>
+                    </div>
                 </div>
-                <br>
-                <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping">Password</span>
-                    <input type="password" class="form-control" placeholder="password" aria-label="password"
-                        name="password" aria-describedby="addon-wrapping">
-                </div>
-                <br>
-                <input type="submit" class="btn btn-success" value="login">
-            </form>
+            </div>
         </div>
     </div>
 </div>

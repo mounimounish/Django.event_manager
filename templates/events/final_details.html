@@ -1,84 +1,108 @@
 {% extends 'base.html' %}
+
+{% block title %}Event Manager • Event Details{% endblock %}
+
 {% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
+                            Step 3 of 4: Event Details
+                        </span>
+                        <a href="{% url 'next' %}" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-arrow-left me-1"></i> Back
+                        </a>
+                    </div>
 
-<div class="container mt-5">
-    <div class="bg-light p-4 rounded shadow">
-        <h2 class="text-center mb-4">Event Catering Details</h2>
+                    <h2 class="h4 fw-bold text-dark mb-1">Event Catering Details</h2>
+                    <p class="text-muted small mb-4">Specify your headcount, setting, and hospitality requirements</p>
 
-        <form method="post" action="{% url 'submit_final_details' %}">
-            {% csrf_token %}
+                    <form method="post" action="{% url 'submit_final_details' %}">
+                        {% csrf_token %}
 
-            <div class="row mb-3 align-items-end">
-                <!-- Event Name -->
-                <div class="col-md-6">
-                    <label for="event_name" class="form-label">Event Name</label>
-                    <input type="text" class="form-control" id="event_name" name="event_name" value="{{ event_name }}"
-                        readonly>
+                        <!-- Setting & Name -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="event_name" class="form-label">Event Name</label>
+                                <input type="text" class="form-control" id="event_name" name="event_name" value="{{ event_name }}" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="event_type" class="form-label">Event Setting</label>
+                                <select class="form-select" id="event_type" name="event_type" required>
+                                    <option value="">Select Setting</option>
+                                    <option value="indoor">Indoor</option>
+                                    <option value="outdoor">Outdoor</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Dining Details -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="total_people" class="form-label">Total People</label>
+                                <input type="number" class="form-control" id="total_people" name="total_people" placeholder="e.g. 150" required min="1">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="food_type" class="form-label">Food Type</label>
+                                <select class="form-select" id="food_type" name="food_type" required onchange="updateMenuOptions()">
+                                    <option value="">Select Food</option>
+                                    <option value="veg">Veg</option>
+                                    <option value="nonveg">Non-Veg</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="menu_type" class="form-label">Menu Type</label>
+                                <select class="form-select" id="menu_type" name="menu_type" required>
+                                    <option value="">Select Food First</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Staff & Cake -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="no_of_suppliers" class="form-label">Number of Suppliers / Staff</label>
+                                <input type="number" class="form-control" id="no_of_suppliers" name="no_of_suppliers" required min="0">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cake_required" class="form-label">Cake Required (kg)</label>
+                                <input type="number" class="form-control" id="cake_required" name="cake_required" min="0" value="0">
+                                <small class="text-muted">0 means no cake</small>
+                            </div>
+                        </div>
+
+                        <!-- Hospitality Add-ons -->
+                        <div class="mb-4">
+                            <label class="form-label mb-2">Hospitality Add-ons</label>
+                            <div class="p-3 bg-light rounded border">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="welcome_drinks" id="welcome_drinks">
+                                    <label class="form-check-label" for="welcome_drinks">Welcome Drinks</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="welcome_chats" id="welcome_chats">
+                                    <label class="form-check-label" for="welcome_chats">Welcome Chats</label>
+                                </div>
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input" type="checkbox" name="pan" id="pan">
+                                    <label class="form-check-label" for="pan">Pan</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid pt-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <span>Confirm Booking & Review</span>
+                                <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-
-                <!-- Event Type -->
-                <div class="col-md-6">
-                    <label for="event_type" class="form-label">Event Type</label>
-                    <select class="form-select" id="event_type" name="event_type" required>
-                        <option value="">Select</option>
-                        <option value="indoor">Indoor</option>
-                        <option value="outdoor">Outdoor</option>
-                    </select>
-                </div>
             </div>
-
-
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label for="total_people" class="form-label">Total People</label>
-                    <input type="number" class="form-control" id="total_people" name="total_people" required>
-                </div>
-
-                <div class="col-md-4">
-                    <label for="food_type" class="form-label">Food Type</label>
-                    <select class="form-select" id="food_type" name="food_type" required onchange="updateMenuOptions()">
-                        <option value="">Select</option>
-                        <option value="veg">Veg</option>
-                        <option value="nonveg">Non-Veg</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <label for="menu_type" class="form-label">Menu Type</label>
-                    <select class="form-select" id="menu_type" name="menu_type" required>
-                        <option value="">Select Food Type First</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="no_of_suppliers" class="form-label">Number of Suppliers</label>
-                <input type="number" class="form-control" id="no_of_suppliers" name="no_of_suppliers" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="cake_required" class="form-label">Cake Required (kg)</label>
-                <input type="number" class="form-control" id="cake_required" name="cake_required" min="0" value="0">
-                <small class="text-muted">0 means no cake</small>
-            </div>
-
-            <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" name="welcome_drinks" id="welcome_drinks">
-                <label class="form-check-label" for="welcome_drinks">Welcome Drinks</label>
-            </div>
-            <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" name="welcome_chats" id="welcome_chats">
-                <label class="form-check-label" for="welcome_chats">Welcome Chats</label>
-            </div>
-            <div class="form-check mb-4">
-                <input class="form-check-input" type="checkbox" name="pan" id="pan">
-                <label class="form-check-label" for="pan">Pan</label>
-            </div>
-
-            <div class="text-center">
-                <button type="submit" class="btn btn-success">Confirm Booking</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
@@ -105,5 +129,4 @@
         }
     }
 </script>
-
 {% endblock %}

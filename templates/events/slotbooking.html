@@ -1,26 +1,63 @@
 {% extends 'base.html' %}
+
+{% block title %}Event Manager • Slot Booking{% endblock %}
+
 {% block content %}
-<br>
-<div class="container">
-    <div class="jumbotron">
-        <h2>Slot Booking for {{ event.name }}</h2>
-        <form method="post" action="">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="event_date" class="form-label">Event Date</label>
-                <input type="date" class="form-control" id="event_date" name="event_date" required>
-            </div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2">
+                            Step 1 of 4: Schedule
+                        </span>
+                        <a href="{% url 'eventsDescription' event.id %}" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-arrow-left me-1"></i> Back
+                        </a>
+                    </div>
 
-            <div class="mb-3">
-                <label for="event_time" class="form-label">Event Time</label>
-                <input type="time" class="form-control" id="event_time" name="event_time" required>
-            </div>
+                    <h2 class="h4 fw-bold text-dark mb-1">Slot Booking for {{ event.name }}</h2>
+                    <p class="text-muted small mb-4">Choose your preferred date and time for the event</p>
 
-            <button type="submit" class="btn btn-primary">Next</button>
-        </form>
-        <br>
-        <a href="{% url 'indoor_images' event.id %}" class="btn btn-info">Preview Indoor</a>
-        <a href="{% url 'outdoor_images' event.id %}" class="btn btn-info">Preview Outdoor</a>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="event_date" class="form-label">
+                                <i class="bi bi-calendar-event me-1 text-primary"></i> Event Date
+                            </label>
+                            <input type="date" class="form-control" id="event_date" name="event_date" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="event_time" class="form-label">
+                                <i class="bi bi-clock me-1 text-primary"></i> Event Time
+                            </label>
+                            <input type="time" class="form-control" id="event_time" name="event_time" required>
+                        </div>
+
+                        <div class="d-grid mb-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <span>Proceed to Catering</span>
+                                <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="pt-3 border-top text-center">
+                        <p class="text-muted small mb-3">Explore venue photos before booking:</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="{% url 'indoor_images' event.id %}" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-building me-1"></i> Preview Indoor
+                            </a>
+                            <a href="{% url 'outdoor_images' event.id %}" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-tree me-1"></i> Preview Outdoor
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

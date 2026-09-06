@@ -1,16 +1,54 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Event Manager • {{ events.name }}{% endblock %}
 
 {% block content %}
-<br>
-<div class="container">
-    <div class="jumbotron">
-        <h1>{{ events.name }}</h1>
-        <h6>{{ events.descriptions }}</h6>
-        <p>Basic package: Rs.{{ events.price }} /-</p>
-        <a href="{% url 'enquire' %}" class="btn btn-info">Enquire</a>
-        <a href="{% url 'slotbooking' events.id %}" class="btn btn-success">BookSlot</a>
+<div class="container py-4">
+    <div class="mb-3">
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Back to Events
+        </a>
+    </div>
 
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm border-0 overflow-hidden">
+                {% if events.image %}
+                <div style="height: 380px; overflow: hidden; background: #e2e8f0;">
+                    <img src="{{ events.image.url }}" alt="{{ events.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                {% endif %}
+
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 pb-3 border-bottom">
+                        <div>
+                            <h1 class="h2 fw-bold mb-1 text-dark">{{ events.name }}</h1>
+                            <span class="text-muted"><i class="bi bi-geo-alt me-1"></i> Premium Event Venue & Package</span>
+                        </div>
+                        <div class="badge-price-green px-4 py-2 rounded-pill">
+                            Starting from: ₹{{ events.price }} /-
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="h5 fw-bold text-dark mb-2">About This Event Package</h4>
+                        <p class="text-secondary lead fs-6" style="line-height: 1.8;">
+                            {{ events.descriptions }}
+                        </p>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-3 pt-3 border-top">
+                        <a href="{% url 'slotbooking' events.id %}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-calendar-check me-1"></i> Book Slot Now
+                        </a>
+                        <a href="{% url 'enquire' %}" class="btn btn-outline-secondary btn-lg">
+                            <i class="bi bi-chat-dots me-1"></i> Make an Enquiry
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
 {% endblock %}
